@@ -1,5 +1,4 @@
 import time
-import pandas as pd
 import os
 import requests
 from tvDatafeed import TvDatafeed, Interval
