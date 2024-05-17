@@ -3,6 +3,10 @@ import pandas as pd
 import os
 import requests
 from tvDatafeed import TvDatafeed, Interval
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv('mem.env')
 
 # Initialize the TvDatafeed object
 tv = TvDatafeed()
