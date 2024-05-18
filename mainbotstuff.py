@@ -63,8 +63,8 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         # Check for signal conditions in the last candle
         m = data['close'].tail(1), ' ' , symbol
         print(m)
-        if (data['MACD'].iloc[-1] < 0) and (data['MACD'].iloc[-2] < data['Signal'].iloc[-2]) and \
-        (data['MACD'].iloc[-1] > data['Signal'].iloc[-1]) and (data['close'].iloc[-1] >= data['EMA_200'].iloc[-1]):
+        if (data['MACD'].iloc[-2] < 0) and (data['MACD'].iloc[-3] < data['Signal'].iloc[-3]) and \
+        (data['MACD'].iloc[-2] > data['Signal'].iloc[-2]) and (data['close'].iloc[-2] >= data['EMA_200'].iloc[-2]):
             message = f"YES, {symbol} {data['close'][-1]}."
             print(message)
             send_discord_message(message)
@@ -76,6 +76,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
 def main():
     exchange = 'BINANCE'
     interval = Interval.in_5_minute
+    start_time = time.time()  # Record the current time before the loop
 
     while True:
         for symbol in symbols:
@@ -89,6 +90,16 @@ def main():
                     time.sleep(60 * (attempt + 1))
                     if attempt == retries - 1:
                         print(f"Failed to fetch data for {symbol} after {retries} attempts. Skipping...")
+
+        end_time = time.time()  # Record the current time after each iteration
+        
+        execution_time = end_time - start_time  # Calculate the time difference
+        print(f"Iteration completed. Execution time: {execution_time} seconds")
+        if execution_time<300:
+            time.sleep(300-execution_time)
+        
+        start_time = time.time()  # Record the current time for the next iteration
+
 
         
 
