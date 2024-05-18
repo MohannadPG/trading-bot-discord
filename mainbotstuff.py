@@ -68,11 +68,6 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
             message = f"YES, {symbol} {data['close'][-1]}."
             print(message)
             send_discord_message(message)
-            time.sleep(0.5)
-        else:
-            message =f"NO Signal for {symbol}"
-            print(message)
-            send_discord_message(message)
 
     except Exception as e:
         print(f"Error processing data for {symbol}: {e}")
