@@ -79,7 +79,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         raise  # Re-raise the exception to trigger retry logic
 
 def main():
-    exchange = 'TADAWUL'
+    exchange = 'BINANCE'
     interval = Interval.in_5_minute
 
     while True:
