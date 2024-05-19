@@ -88,7 +88,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
 
 def main():
     exchange = 'TADAWUL'
-    interval = Interval.in_15_minute
+    interval = Interval.in_1_hour
     start_time = time.time()  # Record the current time before the loop
 
     while True:
@@ -108,8 +108,8 @@ def main():
         
         execution_time = end_time - start_time  # Calculate the time difference
         print(f"Iteration completed. Execution time: {execution_time} seconds")
-        if execution_time<900:
-            time.sleep(900-execution_time)
+        if execution_time<3600:
+            time.sleep(3600-execution_time)
         
         start_time = time.time()  # Record the current time for the next iteration
 
