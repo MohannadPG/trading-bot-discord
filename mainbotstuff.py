@@ -21,21 +21,8 @@ if not discord_webhook_url:
 
 # List of symbols
 symbols = [
-    'TADAWUL:4080', 'TADAWUL:4081', 'TADAWUL:2360', 'TADAWUL:2170', 'TADAWUL:2290', 'TADAWUL:2250',
-    'TADAWUL:2020', 'TADAWUL:2010', 'TADAWUL:2210', 'TADAWUL:2330', 'TADAWUL:2310', 'TADAWUL:2350',
-    'TADAWUL:2001', 'TADAWUL:2080', 'TADAWUL:4200', 'TADAWUL:4180', 'TADAWUL:4190', 'TADAWUL:4240',
-    'TADAWUL:4001', 'TADAWUL:4003', 'TADAWUL:1214', 'TADAWUL:4164', 'TADAWUL:4012', 'TADAWUL:4008',
-    'TADAWUL:4163', 'TADAWUL:4007', 'TADAWUL:4013', 'TADAWUL:4002', 'TADAWUL:4004', 'TADAWUL:2230',
-    'TADAWUL:4292', 'TADAWUL:4291', 'TADAWUL:6002', 'TADAWUL:6004', 'TADAWUL:6001', 'TADAWUL:2050',
-    'TADAWUL:2270', 'TADAWUL:2280', 'TADAWUL:2100', 'TADAWUL:6010', 'TADAWUL:4162', 'TADAWUL:6013',
-    'TADAWUL:6012', 'TADAWUL:4061', 'TADAWUL:6020', 'TADAWUL:6060', 'TADAWUL:2030', 'TADAWUL:2120',
-    'TADAWUL:2081', 'TADAWUL:7010', 'TADAWUL:7020', 'TADAWUL:7040', 'TADAWUL:7030', 'TADAWUL:2160',
-    'TADAWUL:2040', 'TADAWUL:2180', 'TADAWUL:2240', 'TADAWUL:2150', 'TADAWUL:2090', 'TADAWUL:2130',
-    'TADAWUL:1301', 'TADAWUL:2320', 'TADAWUL:2340', 'TADAWUL:1302', 'TADAWUL:1303', 'TADAWUL:1202',
-    'TADAWUL:3007', 'TADAWUL:3008', 'TADAWUL:7201', 'TADAWUL:7202', 'TADAWUL:7203', 'TADAWUL:4170',
-    'TADAWUL:1820', 'TADAWUL:1810', 'TADAWUL:4030', 'TADAWUL:4040', 'TADAWUL:4260', 'TADAWUL:4323',
-    'TADAWUL:4321', 'TADAWUL:4320', 'TADAWUL:4150', 'TADAWUL:4100', 'TADAWUL:4090', 'TADAWUL:4300',
-    'TADAWUL:4310', 'TADAWUL:4230']
+    "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "GOOG", "META", "TSLA", "PEP", "AVGO", "CSCO", "ADBE", "CMCSA", "ORCL", "VRTX", "INTC", "TXN", "NFLX", "AMD", "HON", "INTU", "QCOM", "AMGN", "MDLZ", "TMUS", "PYPL", "SBUX", "ISRG", "ADP", "AMAT", "GILD", "FISV", "MU", "PLD", "NOW", "LRCX", "MNST", "BKNG", "CHTR", "CTAS", "ILMN", "ATVI", "CSX", "XEL", "MRVL", "MCHP", "ADSK", "ADI", "AEP", "IDXX", "KLAC", "MAR", "EA", "CDNS", "CTSH", "FTNT", "SNPS", "AEE", "ROST", "WDAY", "DXCM", "KDP", "NXPI", "EXC", "DLTR", "LULU", "PCAR", "CEG", "PAYX", "ODFL", "PANW", "VRSK", "COST", "SIRI", "VRSN", "LBTYA", "NTES", "DOCU", "SPLK", "WBA", "BIIB", "ALGN", "JD", "TEAM", "CRWD", "ZM", "PDD", "ZS", "DDOG", "MRNA", "OKTA", "BIDU", "CSGP", "SGEN", "MELI", "ASML", "AZN", "TCOM", "EXPE", "NTAP", "GFS", "SNP", "CPRT", "MTCH", "KHC", "ETSY"
+]
 # Example symbol for BTCUSDT on Binance
 
 def send_discord_message(message):
@@ -89,19 +76,14 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         raise  # Re-raise the exception to trigger retry logic
 
 def main():
-    exchange = 'TADAWUL'
+    exchange = 'NASDAQ'
     interval = Interval.in_1_hour
 
     # Define the timezone for GMT (UTC)
     tz = pytz.timezone('Etc/GMT')
-
+    start_time = time.time()
     while True:
-        current_time = datetime.now(tz)
-        current_hour = current_time.hour
-
-        if 7 <= current_hour < 13:  # Check if current time is between 7 AM and 1 PM GMT
-            start_time = time.time()  # Record the current time before the loop
-
+            
             for symbol in symbols:
                 retries = 3
                 for attempt in range(retries):
@@ -119,9 +101,7 @@ def main():
             print(f"Iteration completed. Execution time: {execution_time} seconds")
             if execution_time < 3600:
                 time.sleep(3600 - execution_time)
-        else:
-            print("Outside of working hours (7 AM to 1 PM GMT). Sleeping for 1 hour.")
-            time.sleep(3600)
+            start_time = time.time()
 
 
 
