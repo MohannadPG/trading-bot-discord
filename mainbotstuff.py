@@ -4,6 +4,8 @@ import requests
 from tvDatafeed import TvDatafeed, Interval
 from dotenv import load_dotenv
 import pandas as pd
+from datetime import datetime
+import pytz
 
 # Load environment variables from .env file
 load_dotenv('mem.env')
@@ -89,29 +91,38 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
 def main():
     exchange = 'TADAWUL'
     interval = Interval.in_1_hour
-    start_time = time.time()  # Record the current time before the loop
+
+    # Define the timezone for GMT (UTC)
+    tz = pytz.timezone('Etc/GMT')
 
     while True:
-        for symbol in symbols:
-            retries = 3
-            for attempt in range(retries):
-                try:
-                    fetch_and_process_data(tv, symbol, exchange, interval)
-                    break  # Exit retry loop if successful
-                except Exception as e:
-                    print(f"Attempt {attempt + 1} failed for {symbol}. Retrying in {60 * (attempt + 1)} seconds...")
-                    time.sleep(60 * (attempt + 1))
-                    if attempt == retries - 1:
-                        print(f"Failed to fetch data for {symbol} after {retries} attempts. Skipping...")
+        current_time = datetime.now(tz)
+        current_hour = current_time.hour
 
-        end_time = time.time()  # Record the current time after each iteration
-        
-        execution_time = end_time - start_time  # Calculate the time difference
-        print(f"Iteration completed. Execution time: {execution_time} seconds")
-        if execution_time<3600:
-            time.sleep(3600-execution_time)
-        
-        start_time = time.time()  # Record the current time for the next iteration
+        if 7 <= current_hour < 13:  # Check if current time is between 7 AM and 1 PM GMT
+            start_time = time.time()  # Record the current time before the loop
+
+            for symbol in symbols:
+                retries = 3
+                for attempt in range(retries):
+                    try:
+                        fetch_and_process_data(tv, symbol, exchange, interval)
+                        break  # Exit retry loop if successful
+                    except Exception as e:
+                        print(f"Attempt {attempt + 1} failed for {symbol}. Retrying in {60 * (attempt + 1)} seconds...")
+                        time.sleep(60 * (attempt + 1))
+                        if attempt == retries - 1:
+                            print(f"Failed to fetch data for {symbol} after {retries} attempts. Skipping...")
+
+            end_time = time.time()  # Record the current time after each iteration
+            execution_time = end_time - start_time  # Calculate the time difference
+            print(f"Iteration completed. Execution time: {execution_time} seconds")
+            if execution_time < 3600:
+                time.sleep(3600 - execution_time)
+        else:
+            print("Outside of working hours (7 AM to 1 PM GMT). Sleeping for 1 hour.")
+            time.sleep(3600)
+
 
 
         
