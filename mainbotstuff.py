@@ -21,14 +21,7 @@ if not discord_webhook_url:
 
 # List of symbols
 symbols = [
-    "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "GOOG", "META", "TSLA", "PEP", "AVGO", "CSCO", "ADBE", "CMCSA", "ORCL",
-    "VRTX", "INTC", "TXN", "NFLX", "AMD", "HON", "INTU", "QCOM", "AMGN", "MDLZ", "TMUS", "PYPL", "SBUX", "ISRG", "ADP",
-    "AMAT", "GILD", "FISV", "MU", "PLD", "NOW", "LRCX", "MNST", "BKNG", "CHTR", "CTAS", "ILMN", "ATVI", "CSX", "XEL",
-    "MRVL", "MCHP", "ADSK", "ADI", "AEP", "IDXX", "KLAC", "MAR", "EA", "CDNS", "CTSH", "FTNT", "SNPS", "AEE", "ROST",
-    "WDAY", "DXCM", "KDP", "NXPI", "EXC", "DLTR", "LULU", "PCAR", "CEG", "PAYX", "ODFL", "PANW", "VRSK", "COST", "SIRI",
-    "VRSN", "LBTYA", "NTES", "DOCU", "SPLK", "WBA", "BIIB", "ALGN", "JD", "TEAM", "CRWD", "ZM", "PDD", "ZS", "DDOG",
-    "MRNA", "OKTA", "BIDU", "CSGP", "SGEN", "MELI", "ASML", "AZN", "TCOM", "EXPE", "NTAP", "GFS", "SNP", "CPRT", "MTCH",
-    "KHC", "ETSY"
+    "NASDAQ:AAPL", "NASDAQ:MSFT", "NASDAQ:AMZN", "NASDAQ:NVDA", "NASDAQ:GOOGL", "NASDAQ:GOOG", "NASDAQ:META", "NASDAQ:TSLA", "NASDAQ:PEP", "NASDAQ:AVGO", "NASDAQ:CSCO"
 ]
 
 def send_discord_message(message):
