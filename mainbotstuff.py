@@ -21,9 +21,15 @@ if not discord_webhook_url:
 
 # List of symbols
 symbols = [
-    "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "GOOG", "META", "TSLA", "PEP", "AVGO", "CSCO", "ADBE", "CMCSA", "ORCL", "VRTX", "INTC", "TXN", "NFLX", "AMD", "HON", "INTU", "QCOM", "AMGN", "MDLZ", "TMUS", "PYPL", "SBUX", "ISRG", "ADP", "AMAT", "GILD", "FISV", "MU", "PLD", "NOW", "LRCX", "MNST", "BKNG", "CHTR", "CTAS", "ILMN", "ATVI", "CSX", "XEL", "MRVL", "MCHP", "ADSK", "ADI", "AEP", "IDXX", "KLAC", "MAR", "EA", "CDNS", "CTSH", "FTNT", "SNPS", "AEE", "ROST", "WDAY", "DXCM", "KDP", "NXPI", "EXC", "DLTR", "LULU", "PCAR", "CEG", "PAYX", "ODFL", "PANW", "VRSK", "COST", "SIRI", "VRSN", "LBTYA", "NTES", "DOCU", "SPLK", "WBA", "BIIB", "ALGN", "JD", "TEAM", "CRWD", "ZM", "PDD", "ZS", "DDOG", "MRNA", "OKTA", "BIDU", "CSGP", "SGEN", "MELI", "ASML", "AZN", "TCOM", "EXPE", "NTAP", "GFS", "SNP", "CPRT", "MTCH", "KHC", "ETSY"
+    "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "GOOG", "META", "TSLA", "PEP", "AVGO", "CSCO", "ADBE", "CMCSA", "ORCL",
+    "VRTX", "INTC", "TXN", "NFLX", "AMD", "HON", "INTU", "QCOM", "AMGN", "MDLZ", "TMUS", "PYPL", "SBUX", "ISRG", "ADP",
+    "AMAT", "GILD", "FISV", "MU", "PLD", "NOW", "LRCX", "MNST", "BKNG", "CHTR", "CTAS", "ILMN", "ATVI", "CSX", "XEL",
+    "MRVL", "MCHP", "ADSK", "ADI", "AEP", "IDXX", "KLAC", "MAR", "EA", "CDNS", "CTSH", "FTNT", "SNPS", "AEE", "ROST",
+    "WDAY", "DXCM", "KDP", "NXPI", "EXC", "DLTR", "LULU", "PCAR", "CEG", "PAYX", "ODFL", "PANW", "VRSK", "COST", "SIRI",
+    "VRSN", "LBTYA", "NTES", "DOCU", "SPLK", "WBA", "BIIB", "ALGN", "JD", "TEAM", "CRWD", "ZM", "PDD", "ZS", "DDOG",
+    "MRNA", "OKTA", "BIDU", "CSGP", "SGEN", "MELI", "ASML", "AZN", "TCOM", "EXPE", "NTAP", "GFS", "SNP", "CPRT", "MTCH",
+    "KHC", "ETSY"
 ]
-# Example symbol for BTCUSDT on Binance
 
 def send_discord_message(message):
     data = {
@@ -61,7 +67,6 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         # Calculate the 200-period EMA
         data['EMA_200'] = data['close'].ewm(span=200, adjust=False).mean()
 
-
         # Check for signal conditions in the last candle
         m = data['close'].tail(1), ' ' , symbol
         print(m)
@@ -82,30 +87,26 @@ def main():
     # Define the timezone for GMT (UTC)
     tz = pytz.timezone('Etc/GMT')
     start_time = time.time()
+    
     while True:
-            
-            for symbol in symbols:
-                retries = 3
-                for attempt in range(retries):
-                    try:
-                        fetch_and_process_data(tv, symbol, exchange, interval)
-                        break  # Exit retry loop if successful
-                    except Exception as e:
-                        print(f"Attempt {attempt + 1} failed for {symbol}. Retrying in {60 * (attempt + 1)} seconds...")
-                        time.sleep(60 * (attempt + 1))
-                        if attempt == retries - 1:
-                            print(f"Failed to fetch data for {symbol} after {retries} attempts. Skipping...")
+        for symbol in symbols:
+            retries = 3
+            for attempt in range(retries):
+                try:
+                    fetch_and_process_data(tv, symbol, exchange, interval)
+                    break  # Exit retry loop if successful
+                except Exception as e:
+                    print(f"Attempt {attempt + 1} failed for {symbol}. Retrying in {60 * (attempt + 1)} seconds...")
+                    time.sleep(60 * (attempt + 1))
+                    if attempt == retries - 1:
+                        print(f"Failed to fetch data for {symbol} after {retries} attempts. Skipping...")
 
-            end_time = time.time()  # Record the current time after each iteration
-            execution_time = end_time - start_time  # Calculate the time difference
-            print(f"Iteration completed. Execution time: {execution_time} seconds")
-            if execution_time < 3600:
-                time.sleep(3600 - execution_time)
-            start_time = time.time()
-
-
-
-        
+        end_time = time.time()  # Record the current time after each iteration
+        execution_time = end_time - start_time  # Calculate the time difference
+        print(f"Iteration completed. Execution time: {execution_time} seconds")
+        if execution_time < 3600:
+            time.sleep(3600 - execution_time)
+        start_time = time.time()
 
 if __name__ == "__main__":
     main()
