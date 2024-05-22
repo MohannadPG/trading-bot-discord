@@ -90,11 +90,12 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         # Check for signal conditions in the last candle
         m = data['close'].tail(1), ' ' , symbol
         print(m)
-        if (data['MACD'].iloc[-2] < 0) and (data['MACD'].iloc[-3] < data['Signal'].iloc[-3]) and \
-        (data['MACD'].iloc[-2] > data['Signal'].iloc[-2]) and (data['close'].iloc[-2] >= data['EMA_200'].iloc[-2]):
-            message = f"YES, {symbol} {data['close'][-1]}."
-            print(message)
-            send_discord_message(message)
+        for i in range(-10,0):
+            if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
+            (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]):
+                message = f"YES, {symbol} {data['close'][i-1]}."
+                print(message)
+                send_discord_message(message)
 
     except Exception as e:
         print(f"Error processing data for {symbol}: {e}")
