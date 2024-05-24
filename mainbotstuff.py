@@ -35,7 +35,7 @@ symbols = [
     'TADAWUL:3007', 'TADAWUL:3008', 'TADAWUL:7201', 'TADAWUL:7202', 'TADAWUL:7203', 'TADAWUL:4170',
     'TADAWUL:1820', 'TADAWUL:1810', 'TADAWUL:4030', 'TADAWUL:4040', 'TADAWUL:4260', 'TADAWUL:4323',
     'TADAWUL:4321', 'TADAWUL:4320', 'TADAWUL:4150', 'TADAWUL:4100', 'TADAWUL:4090', 'TADAWUL:4300',
-    'TADAWUL:4310', 'TADAWUL:4230'
+    'TADAWUL:4310
 ]
 
 def send_discord_message(message):
@@ -89,7 +89,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         raise  # Re-raise the exception to trigger retry logic
 
 def main():
-    exchange = 'TADAWUL'
+    exchange = 'BINANCE'
     interval = Interval.in_1_hour
 
     # Define the timezone for GMT (UTC)
