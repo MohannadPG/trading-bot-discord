@@ -21,9 +21,6 @@ if not discord_webhook_url:
 
 # List of symbols
 symbols = [
-American stock
-
-
 "NASDAQ:AAPL", "NASDAQ:MSFT", "NASDAQ:GOOGL", "NASDAQ:GOOG", "NASDAQ:AMZN", "NASDAQ:FB", "NASDAQ:TSLA", "NASDAQ:NVDA", "NASDAQ:PYPL", "NASDAQ:ADBE", 
 "NASDAQ:INTC", "NASDAQ:CMCSA", "NASDAQ:PEP", "NASDAQ:CSCO", "NASDAQ:AVGO", "NASDAQ:COST", "NASDAQ:TMUS", "NASDAQ:QCOM", "NASDAQ:TXN", "NASDAQ:CHTR", 
 "NASDAQ:AMGN", "NASDAQ:SBUX", "NASDAQ:ISRG", "NASDAQ:AMD", "NASDAQ:BKNG", "NASDAQ:INTU", "NASDAQ:MDLZ", "NASDAQ:MU", "NASDAQ:ADP", "NASDAQ:LRCX", 
@@ -105,7 +102,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         raise  # Re-raise the exception to trigger retry logic
 
 def main():
-    exchange = 'BINANCE'
+    exchange = 'NASDAQ'
     interval = Interval.in_1_hour
 
     # Define the timezone for GMT (UTC)
