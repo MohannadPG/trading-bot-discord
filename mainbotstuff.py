@@ -111,14 +111,14 @@ def main():
     
     while True:
         for symbol in symbols:
-            retries = 3
+            retries = 2
             for attempt in range(retries):
                 try:
                     fetch_and_process_data(tv, symbol, exchange, interval)
                     break  # Exit retry loop if successful
                 except Exception as e:
-                    print(f"Attempt {attempt + 1} failed for {symbol}. Retrying in {60 * (attempt + 1)} seconds...")
-                    time.sleep(60 * (attempt + 1))
+                    print(f"Attempt {attempt + 1} failed for {symbol}. Retrying in {3 * (attempt + 1)} seconds...")
+                    time.sleep(3 * (attempt + 1))
                     if attempt == retries - 1:
                         print(f"Failed to fetch data for {symbol} after {retries} attempts. Skipping...")
 
