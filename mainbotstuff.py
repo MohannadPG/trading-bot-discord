@@ -102,7 +102,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
 
 def main():
     exchange = 'NASDAQ'
-    interval = Interval.in_1_hour
+    interval = Interval.in_30_minute
 
     # Define the timezone for GMT (UTC)
     tz = pytz.timezone('Etc/GMT')
