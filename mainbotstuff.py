@@ -124,8 +124,8 @@ def main():
         end_time = time.time()  # Record the current time after each iteration
         execution_time = end_time - start_time  # Calculate the time difference
         print(f"Iteration completed. Execution time: {execution_time} seconds")
-        if execution_time < 3600:
-            time.sleep(3600 - execution_time)
+        if execution_time < 1800:
+            time.sleep(1800 - execution_time)
         start_time = time.time()
 
 if __name__ == "__main__":
