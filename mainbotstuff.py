@@ -97,7 +97,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         print(m)
         for i in range(-1,0):
             if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
-                (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]):
+                (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'] < 30:
                 message = f"YES, {symbol} {data['close'][i-1]}."
                 print(message)
                 send_discord_message(message)
