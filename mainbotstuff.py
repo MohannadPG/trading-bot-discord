@@ -95,7 +95,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         # Check for signal conditions in the last candle
         m = data['close'].tail(1), ' ' , symbol
         print(m)
-        for i in range(-1,0):
+        for i in range(-3,0):
             if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
                 (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'].iloc[i-1] < 110:
                 message = f"YES, {symbol} {data['close'][i-1]}."
@@ -108,7 +108,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
 
 def main():
     exchange = 'NASDAQ'
-    interval = Interval.in_30_minute
+    interval = Interval.in_4_hour
 
     # Define the timezone for GMT (UTC)
     tz = pytz.timezone('Etc/GMT')
@@ -130,8 +130,8 @@ def main():
         end_time = time.time()  # Record the current time after each iteration
         execution_time = end_time - start_time  # Calculate the time difference
         print(f"Iteration completed. Execution time: {execution_time} seconds")
-        if execution_time < 1800:
-            time.sleep(1800 - execution_time)
+        if execution_time < 14400:
+            time.sleep(14400 - execution_time)
         start_time = time.time()
 
 if __name__ == "__main__":
