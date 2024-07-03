@@ -48,7 +48,7 @@ symbols = [
     'NASDAQ:IFBD', 'NASDAQ:CNTX','NASDAQ:ENVB', 'NASDAQ:QNRX', 'NASDAQ:LITM', 'NASDAQ:GNPX', 'NASDAQ:SSYS', 'NASDAQ:PMCB', 'NASDAQ:IMMX', 'NASDAQ:NLSP', 'NASDAQ:BIOR', 'NASDAQ:BBLG','NASDAQ:VS', 'NASDAQ:NUVL', 'NASDAQ:WIRE', 'NASDAQ:IDN', 'NASDAQ:ALRN', 'NASDAQ:ADD', 'NASDAQ:XELB','NASDAQ:VRPX', 'NASDAQ:HTOO', 'NASDAQ:BRFH','NASDAQ:SIFY', 'NASDAQ:MDJH', 'NASDAQ:NVCT', 'NASDAQ:DSWL','NASDAQ:GNTX', 'NASDAQ:UXIN', 'NASDAQ:TALK', 'NASDAQ:BCTX','NASDAQ:CRCT', 'NASDAQ:CHKP', 'NASDAQ:RCEL', 'NASDAQ:KTRA',  'NASDAQ:MTCH', 'NASDAQ:ATOS', 'NASDAQ:AEHL', 'NASDAQ:CMPX', 'NASDAQ:MNPR', 'NASDAQ:TLSA',  'NASDAQ:ALDX', 'NASDAQ:ACXP', 'NASDAQ:PAX', 'NASDAQ:CHSCO', 'NASDAQ:BHF', 'NASDAQ:ATXI',
     "NASDAQ:HYMC", "NASDAQ:GNTA", "NASDAQ:HYZN","NASDAQ:SVC", "NASDAQ:BROG", "NASDAQ:SNPX", "NASDAQ:ARTL", "NASDAQ:VIRI", "NASDAQ:UTSI",  "NASDAQ:AVGO", "NASDAQ:DSGN","NASDAQ:OCUP", "NASDAQ:LTBR","NASDAQ:TAIT", "NASDAQ:LAND", "NASDAQ:BRZE", "NASDAQ:GTHX", "NASDAQ:XBIT", "NASDAQ:XOMA", "NASDAQ:CRMD", "NASDAQ:GLMD",
     "NASDAQ:CMPOW", "NASDAQ:ANEB", "NASDAQ:BOLD", "NASDAQ:DHCNI", "NASDAQ:AVXL", "NASDAQ:BNOX", "NASDAQ:TRIV", "NASDAQ:TAYD", "NASDAQ:BZFDW", "NASDAQ:CHSCL", "NASDAQ:QRTEP", "NASDAQ:NNAVW", "NASDAQ:CLBTW", "NASDAQ:VRMEW", "NASDAQ:PCTTU", "NASDAQ:BPYPN", "NASDAQ:BPYPO", "NASDAQ:GOODN", "NASDAQ:CHSCM", "NASDAQ:CHSCN", "NASDAQ:CHSCO", "NASDAQ:CSSEL", "NASDAQ:DHCNL", "NASDAQ:PMN", "NASDAQ:AGRIW", "NASDAQ:MSSAR",
-    "NYSE:UNH", "NYSE:ORCL", "NASDAQ:PG", "NASDAQ:JNJ", "NASDAQ:MRK", "NASDAQ:ABBV", "NASDAQ:CVX", "NASDAQ:CRM", "NASDAQ:WFC", "NASDAQ:TMO", "NASDAQ:INTU", "NASDAQ:ABT", "NASDAQ:DHR", "NASDAQ:VZ", "NASDAQ:AXP", "NASDAQ:AMGN", "NASDAQ:IBM", "NASDAQ:NOW", "NASDAQ:CAT", "NASDAQ:PFE", "NASDAQ:PM", "NASDAQ:GS", "NASDAQ:UBER", "NASDAQ:HON", "NASDAQ:UNP", "NASDAQ:T", "NASDAQ:RTX", "NASDAQ:COP", "NASDAQ:SYK", "NASDAQ:TJX", "NASDAQ:ELV", "NASDAQ:C", "NASDAQ:PGR", "NASDAQ:LOW", "NASDAQ:BLK", "NASDAQ:UPS"
+    "NYSE:UNH", "NYSE:ORCL", "NYSE:PG", "NASDAQ:JNJ", "NASDAQ:MRK", "NASDAQ:ABBV", "NASDAQ:CVX", "NASDAQ:CRM", "NASDAQ:WFC", "NASDAQ:TMO", "NASDAQ:INTU", "NASDAQ:ABT", "NASDAQ:DHR", "NASDAQ:VZ", "NASDAQ:AXP", "NASDAQ:AMGN", "NASDAQ:IBM", "NASDAQ:NOW", "NASDAQ:CAT", "NASDAQ:PFE", "NASDAQ:PM", "NASDAQ:GS", "NASDAQ:UBER", "NASDAQ:HON", "NASDAQ:UNP", "NASDAQ:T", "NASDAQ:RTX", "NASDAQ:COP", "NASDAQ:SYK", "NASDAQ:TJX", "NASDAQ:ELV", "NASDAQ:C", "NASDAQ:PGR", "NASDAQ:LOW", "NASDAQ:BLK", "NASDAQ:UPS"
 ]
 
 def send_discord_message(message):
@@ -90,10 +90,10 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         # Check for signal conditions in the last candle
         m = data['close'].tail(1), ' ' , symbol
         print(m)
-        for i in range(-1,1):
+        for i in range(-3,1):
             if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
-                (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'].iloc[i-1] < 110:
-                message = f"YES, {symbol} {data['close'][i-1]}."
+                (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'].iloc[i-1]:
+                message = f"YES, {symbol} {data['close'][i-1]}.,30min"
                 print(message)
                 send_discord_message(message)
 
@@ -102,7 +102,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         raise  # Re-raise the exception to trigger retry logic
 
 def main():
-    interval = Interval.in_4_hour
+    interval = Interval.in_30_minute
 
     # Define the timezone for GMT (UTC)
     tz = pytz.timezone('Etc/GMT')
