@@ -110,7 +110,7 @@ def main():
     
     while True:
         for symbol in symbols:
-            retries = 2
+            retries = 1
             exchange, symbol_only = symbol.split(':')
             for attempt in range(retries):
                 try:
@@ -125,8 +125,8 @@ def main():
         end_time = time.time()  # Record the current time after each iteration
         execution_time = end_time - start_time  # Calculate the time difference
         print(f"Iteration completed. Execution time: {execution_time} seconds")
-        if execution_time < 14400:
-            time.sleep(14400 - execution_time)
+        if execution_time < 1800:
+            time.sleep(1800 - execution_time)
         start_time = time.time()
 
 if __name__ == "__main__":
