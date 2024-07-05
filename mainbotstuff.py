@@ -118,7 +118,9 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         print(m)
         tz = pytz.timezone('Etc/GMT')
         current_time = datetime.now(tz)
-        if current_time.hour>=20:
+        if current_time.hour >=20 and current_time.minute>30 or current_time.hour<=13 and current_time.minute<30:
+            print("ain't nothing happening")
+        elif current_time.hour>=20 and current_time.minute<=30:
             for i in range(0,1):
                 if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
                     (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'].iloc[i-1]:
