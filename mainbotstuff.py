@@ -119,7 +119,7 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         tz = pytz.timezone('Etc/GMT')
         current_time = datetime.now(tz)
         print(current_time)
-        if current_time.hour >=20 and current_time.minute>30 or current_time.hour<=13 and current_time.minute<30:
+        if current_time.hour ==20 and current_time.minute>30 or current_time.hour>20 or current_time.hour==13 and current_time.minute<30 or current_time.hour<13:
             print("ain't nothing happening")
         elif current_time.hour>=20 and current_time.minute<=30:
             for i in range(0,1):
