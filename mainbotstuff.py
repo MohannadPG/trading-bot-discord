@@ -116,12 +116,22 @@ def fetch_and_process_data(tv, symbol, exchange, interval):
         # Check for signal conditions in the last candle
         m = data['close'].tail(1), ' ' , symbol
         print(m)
-        for i in range(-1,0):
-            if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
-                (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'].iloc[i-1]:
-                message = f"YES, {symbol} {data['close'][i-1]}.,30min"
-                print(message)
-                send_discord_message(message)
+        tz = pytz.timezone('Etc/GMT')
+        current_time = datetime.now(tz)
+        if current_time.hour>=20:
+            for i in range(0,1):
+                if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
+                    (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'].iloc[i-1]:
+                    message = f"YES, {symbol} {data['close'][i-1]}.,30min"
+                    print(message)
+                    send_discord_message(message)
+        else:
+            for i in range(-1,0):
+                if (data['MACD'].iloc[i-1] < 0) and (data['MACD'].iloc[i-2] < data['Signal'].iloc[i-2]) and \
+                    (data['MACD'].iloc[i-1] > data['Signal'].iloc[i-1]) and (data['close'].iloc[i-1] >= data['EMA_200'].iloc[i-1]) and data['close'].iloc[i-1]:
+                    message = f"YES, {symbol} {data['close'][i-1]}.,30min"
+                    print(message)
+                    send_discord_message(message)
 
     except Exception as e:
         print(f"Error processing data for {symbol}: {e}")
